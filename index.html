@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>KPF – Keep it fresh</title>
+<style>
+  :root { --bg:#f3f7f1; --card:#ffffff; --text:#1c2a1e; --muted:#5b6b5d; --green:#2e7d32; --red:#c62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121813; --card:#1d261f; --text:#e8efe8; --muted:#a3b2a5; --green:#81c784; --red:#ef9a9a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--bg); color:var(--text); padding:16px;
+         font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .card { background:var(--card); border-radius:20px; padding:32px 24px; max-width:420px; width:100%;
+          text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.08); }
+  .logo { width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:30px;
+          font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+  .icon { font-size:48px; margin:8px 0; }
+  h1 { font-size:22px; margin:8px 0 12px; }
+  p { color:var(--muted); line-height:1.5; margin:8px 0; }
+  .ok h1 { color:var(--green); } .err h1 { color:var(--red); }
+  small { display:block; margin-top:24px; color:var(--muted); }
+</style>
+</head>
+<body>
+<main class="card" id="box">
+  <div class="logo">K</div>
+  <div class="icon" id="icon">⏳</div>
+  <h1 id="title">Einen Moment …</h1>
+  <p id="text"></p>
+  <small>KPF – Keep it fresh</small>
+</main>
+<script>
+  // Supabase hat den Link schon geprüft und leitet hierher weiter.
+  // Erfolg: ?code=… oder #access_token=… · Fehler: #error=…&error_code=…
+  var q = new URLSearchParams(location.search);
+  var h = new URLSearchParams(location.hash.replace(/^#/, ''));
+  var err = q.get('error') || h.get('error');
+  var errCode = q.get('error_code') || h.get('error_code') || '';
+  var success = !err && (q.get('code') || h.get('access_token') || h.get('type'));
+  // Codes und Schlüssel nicht in der Adresszeile stehen lassen.
+  if (location.search || location.hash) history.replaceState(null, '', location.pathname);
+  function show(cls, icon, title, text) {
+    document.getElementById('box').className = 'card ' + cls;
+    document.getElementById('icon').textContent = icon;
+    document.getElementById('title').textContent = title;
+    document.getElementById('text').textContent = text;
+  }
+  if (err) {
+    var expired = /expired|otp/i.test(errCode + ' ' + (q.get('error_description') || h.get('error_description') || ''));
+    show('err', '⚠️',
+      expired ? 'Link abgelaufen oder schon benutzt' : 'Das hat nicht geklappt',
+      'Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der KPF-App einloggen. ' +
+      'Sonst in der App mit E-Mail und Passwort einloggen und auf „Code senden“ tippen.');
+  } else if (success) {
+    show('ok', '✅', 'E-Mail-Adresse bestätigt',
+      'Super! Du kannst diese Seite schließen. Öffne jetzt die KPF-App und logge dich mit deiner E-Mail-Adresse und deinem Passwort ein.');
+  } else {
+    show('', '🥬', 'KPF – Keep it fresh',
+      'Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die KPF-App.');
+  }
+</script>
+</body>
+</html>
