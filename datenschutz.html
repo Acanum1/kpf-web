@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutzerklärung – KPF</title>
+<style>
+  :root { --bg:#f3f7f1; --card:#ffffff; --text:#1c2a1e; --muted:#5b6b5d; --green:#2e7d32; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121813; --card:#1d261f; --text:#e8efe8; --muted:#a3b2a5; --green:#81c784; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); padding:16px;
+         font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height:1.55; }
+  main { background:var(--card); border-radius:20px; padding:24px 20px; max-width:760px; margin:0 auto;
+         box-shadow:0 4px 24px rgba(0,0,0,.08); }
+  h1 { font-size:24px; margin:0 0 4px; color:var(--green); }
+  h2 { font-size:18px; margin:28px 0 6px; }
+  p, li { color:var(--text); }
+  .muted { color:var(--muted); font-size:14px; }
+  a { color:var(--green); }
+  nav { max-width:760px; margin:0 auto 12px; font-size:14px; }
+  .todo { background:#fff3cd; color:#6b4e00; padding:0 4px; border-radius:4px; }
+</style>
+</head>
+<body>
+<nav><a href="./">KPF – Keep it fresh</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a></nav>
+<main>
+
+<h1>Datenschutzerklärung</h1>
+<p class="muted">KPF – Keep it fresh · Stand: 28.10.2026 · Version 1</p>
+
+<h2>1. Verantwortlicher</h2>
+<p><span class="todo">[Tobias Knoke]</span><br><span class="todo">[Ringstraße 15, 61203 Reichelsheim]</span><br>E-Mail: <span class="todo">[keepitfreshkpf@gmail.com]</span></p>
+
+<h2>2. Worum es geht</h2>
+<p>KPF ist eine App, mit der Haushalte ihren gemeinsamen Lebensmittelvorrat, eine Einkaufsliste und ihr Budget verwalten.
+Wir verarbeiten nur die Daten, die dafür nötig sind. Es gibt keine Werbung, kein Tracking und keinen Verkauf von Daten.</p>
+
+<h2>3. Welche Daten wir verarbeiten</h2>
+<ul>
+  <li><b>Konto:</b> E-Mail-Adresse, Passwort (nur verschlüsselt gespeichert), Anzeigename, persönliche App-Einstellungen.</li>
+  <li><b>Haushalt:</b> Name des Haushalts, Mitglieder und ihre Rollen (Eigentümer, Mitglied, Kind), Einladungen.</li>
+  <li><b>Vorrat und Einkauf:</b> Produkte mit Menge, Haltbarkeit, Lagerort, Preis und Geschäft, Einkaufsliste, Budget, Rezepte, Verlauf (wer hat was wann verbraucht oder weggeworfen).</li>
+  <li><b>Fotos von Kassenbons und Verpackungen:</b> nur wenn du die Funktion nutzt. Die Fotos werden zur Auswertung übertragen und nicht dauerhaft gespeichert.</li>
+  <li><b>Gerätedaten:</b> ein Push-Kennzeichen deines Geräts, damit Benachrichtigungen ankommen.</li>
+</ul>
+<p>Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art. 6 Abs. 1 lit. b DSGVO). Für freiwillige Funktionen wie
+Push-Nachrichten und die KI-Auswertung ist es zusätzlich deine Einwilligung durch die Nutzung (Art. 6 Abs. 1 lit. a DSGVO),
+die du jederzeit in den Einstellungen bzw. durch Nichtnutzen widerrufen kannst.</p>
+
+<h2>4. Wer die Daten sieht</h2>
+<p>Die Daten eines Haushalts sehen nur seine Mitglieder. Kinder sehen keine Preise und kein Budget.</p>
+
+<h2>5. Dienstleister, die wir einsetzen</h2>
+<ul>
+  <li><b>Supabase</b> (Supabase Inc., USA): Datenbank, Anmeldung und Server-Funktionen. Speicherort der Daten: <span class="todo">[REGION, z. B. EU (Frankfurt)]</span>.</li>
+  <li><b>Google Firebase Cloud Messaging</b> (Google Ireland Ltd. / Google LLC, USA): Zustellung von Push-Nachrichten.</li>
+  <li><b>Anthropic</b> (Anthropic PBC, USA): KI-Auswertung von Kassenbon- und Verpackungsfotos sowie Rezeptvorschläge – nur wenn du diese Funktionen nutzt.
+      Übertragen wird nur das Foto bzw. die Produktliste, nicht dein Name oder deine E-Mail-Adresse. Nach Angaben von Anthropic werden diese Daten nicht zum Training von KI-Modellen verwendet.</li>
+  <li><b>Open Food Facts</b> (gemeinnützige Datenbank, Frankreich): Beim Barcode-Scan wird nur die Barcode-Nummer abgefragt.</li>
+  <li><b>Apple / Google:</b> Texterkennung auf dem Gerät und Spracherkennung beim Diktieren laufen über die Dienste deines Handys.</li>
+  <li><b>GitHub Pages</b> (GitHub Inc., USA): Hosting dieser Webseite. Beim Aufruf werden technisch notwendige Zugriffsdaten (z. B. IP-Adresse) verarbeitet.</li>
+</ul>
+<p>Bei Dienstleistern in den USA erfolgt die Übermittlung auf Grundlage des EU-US Data Privacy Framework bzw. von EU-Standardvertragsklauseln.</p>
+
+<h2>6. Kinder</h2>
+<p>Kinder unter 16 Jahren können nur von einem Eigentümer des Haushalts per QR-Code hinzugefügt werden. Dafür ist die Einwilligung
+eines Erziehungsberechtigten nötig (Art. 8 DSGVO). Kinderkonten haben keine E-Mail-Adresse und kein Passwort; gespeichert wird nur der Vorname,
+den die Eltern eingeben. Kinder nutzen keine KI und sehen keine Preise. Eltern können das Kind jederzeit aus dem Haushalt entfernen.</p>
+
+<h2>7. Speicherdauer und Löschen</h2>
+<p>Wir speichern deine Daten, solange du dein Konto hast. Unter <b>Einstellungen → Konto → Konto löschen</b> löschst du dein Konto selbst.
+Haushalte, in denen du allein bist, werden mit allen Daten gelöscht. In gemeinsamen Haushalten bleiben die Einträge für die anderen Mitglieder erhalten, ohne deinen Namen.</p>
+
+<h2>8. Deine Rechte</h2>
+<p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch
+(Art. 15–21 DSGVO) sowie auf Widerruf erteilter Einwilligungen. Schreib uns dazu an <span class="todo">[KONTAKT-E-MAIL]</span>.
+Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, z. B. in deinem Bundesland.</p>
+
+<h2>9. Sicherheit</h2>
+<p>Die Verbindung zwischen App und Server ist verschlüsselt. Jeder Haushalt ist durch Zugriffsregeln in der Datenbank von anderen getrennt.</p>
+
+<h2>10. Änderungen</h2>
+<p>Ändert sich diese Erklärung wesentlich, informieren wir dich in der App.</p>
+</main>
+</body>
+</html>
