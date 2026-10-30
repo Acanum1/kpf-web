@@ -3,65 +3,352 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>KPF – Keep it fresh</title>
+<title>Bevora – Iss es, bevor's abläuft.</title>
+<meta name="description" content="Bevora ist der gemeinsame Vorrat für deinen Haushalt: Kassenbon fotografieren, rechtzeitig erinnert werden, alles vor dem MHD verbrauchen.">
+<meta name="theme-color" content="#2A1E2F">
+<script>
+  // Bestätigungslinks von Supabase landen auf der Startseite → weiter zur Bestätigungsseite.
+  (function () {
+    var s = location.search + location.hash;
+    if (/[?#&](code|access_token|error|error_code|type)=/.test(s)) {
+      location.replace('bestaetigt.html' + location.search + location.hash);
+    }
+  })();
+</script>
 <style>
-  :root { --bg:#f3f7f1; --card:#ffffff; --text:#1c2a1e; --muted:#5b6b5d; --green:#2e7d32; --red:#c62828; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#121813; --card:#1d261f; --text:#e8efe8; --muted:#a3b2a5; --green:#81c784; --red:#ef9a9a; }
+  :root {
+    --bg:#FFF8F0; --bg2:#FCEFE2; --card:#FFFFFF; --ink:#2A1E2F; --muted:#6E6272; --line:#EADCCD;
+    --coral:#F2613F; --coral-soft:#FDE3DA; --sun:#F5B52E; --sun-soft:#FDF0CF; --mint:#2FA67A; --mint-soft:#D9F2E7;
+    --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
-  * { box-sizing: border-box; }
-  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-         background:var(--bg); color:var(--text); padding:16px;
-         font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  .card { background:var(--card); border-radius:20px; padding:32px 24px; max-width:420px; width:100%;
-          text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.08); }
-  .logo { width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:30px;
-          font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
-  .icon { font-size:48px; margin:8px 0; }
-  h1 { font-size:22px; margin:8px 0 12px; }
-  p { color:var(--muted); line-height:1.5; margin:8px 0; }
-  .ok h1 { color:var(--green); } .err h1 { color:var(--red); }
-  small { display:block; margin-top:24px; color:var(--muted); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1B1420; --bg2:#241B2A; --card:#2C2233; --ink:#F7EEE6; --muted:#BFB2C2; --line:#3D3045;
+            --coral-soft:#4A2A27; --sun-soft:#463A1F; --mint-soft:#1F3D33; }
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.55; }
+  a { color:inherit; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  h1,h2,h3 { font-family:var(--serif); font-weight:700; line-height:1.12; margin:0; letter-spacing:-.01em; }
+  em { font-style:italic; color:var(--coral); }
+  .eyebrow { font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--coral); }
+  .muted { color:var(--muted); }
+
+  /* Navigation */
+  nav { position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  nav .wrap { display:flex; align-items:center; gap:24px; height:64px; }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-size:22px; font-weight:700; text-decoration:none; }
+  .links { display:flex; gap:22px; margin-left:auto; font-size:15px; }
+  .links a { text-decoration:none; color:var(--muted); } .links a:hover { color:var(--ink); }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:999px; font-weight:600;
+         text-decoration:none; font-size:15px; border:2px solid transparent; }
+  .btn-primary { background:var(--coral); color:#fff; } .btn-primary:hover { filter:brightness(1.05); }
+  .btn-ghost { border-color:var(--line); background:var(--card); }
+  .btn-soon { border-color:var(--line); background:transparent; color:var(--muted); cursor:default; }
+  @media (max-width:760px) { .links { display:none; } nav .btn { margin-left:auto; padding:9px 14px; } }
+
+  /* Hero */
+  .hero { padding:72px 0 56px; }
+  .hero .wrap { display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
+  .hero h1 { font-size:clamp(40px, 6vw, 68px); margin:14px 0 18px; }
+  .hero p.lead { font-size:19px; color:var(--muted); max-width:520px; margin:0 0 28px; }
+  .ctas { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .note { margin-top:18px; font-size:14px; color:var(--muted); }
+  @media (max-width:860px) { .hero .wrap { grid-template-columns:1fr; } .hero { padding-top:40px; } }
+
+  /* Handy-Mockup */
+  .stage { position:relative; display:flex; justify-content:center; padding-top:70px; }
+  .phone { width:290px; background:var(--card); border:10px solid var(--ink); border-radius:42px; padding:18px 14px 22px;
+           box-shadow:0 30px 60px -20px rgba(42,30,47,.35); }
+  .phone .bar { width:90px; height:6px; border-radius:6px; background:var(--line); margin:0 auto 16px; }
+  .phone h4 { font-family:var(--serif); font-size:22px; margin:0 6px 4px; }
+  .phone .sub { font-size:12px; color:var(--muted); margin:0 6px 12px; }
+  .item { display:flex; align-items:center; gap:10px; padding:10px; border-radius:14px; background:var(--bg); margin-bottom:8px; }
+  .item .emo { font-size:22px; width:34px; text-align:center; }
+  .item > div { min-width:0; } .item b { display:block; font-size:14px; } .item small { display:block; color:var(--muted); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .chip { margin-left:auto; font-size:11px; font-weight:700; padding:4px 9px; border-radius:999px; white-space:nowrap; }
+  .c-red { background:var(--coral-soft); color:var(--coral); }
+  .c-sun { background:var(--sun-soft); color:#B07A06; }
+  .c-mint { background:var(--mint-soft); color:var(--mint); }
+  @media (prefers-color-scheme: dark) { .c-sun { color:var(--sun); } }
+  .push { position:absolute; top:0; right:-6px; width:250px; background:var(--card); border:1px solid var(--line);
+          border-radius:18px; padding:12px 14px; font-size:13px; box-shadow:0 18px 40px -16px rgba(42,30,47,.4); transform:rotate(2deg); }
+  .push .t { display:flex; align-items:center; gap:8px; font-weight:700; font-size:12px; margin-bottom:4px; }
+  .badge { position:absolute; bottom:28px; left:-4px; background:var(--mint); color:#fff; border-radius:16px; padding:10px 14px;
+           font-size:13px; font-weight:700; transform:rotate(-3deg); box-shadow:0 14px 30px -12px rgba(47,166,122,.6); }
+  @media (max-width:420px) { .push { right:0; width:230px; top:0; } .badge { left:0; } }
+
+  /* Ampel-Leiste */
+  .ampel { background:var(--ink); color:var(--bg); padding:28px 0; }
+  .ampel .wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .ampel div.a { display:flex; gap:12px; align-items:flex-start; }
+  .dot { width:14px; height:14px; border-radius:50%; margin-top:6px; flex:none; }
+  .ampel b { display:block; font-family:var(--serif); font-size:19px; }
+  .ampel span { opacity:.75; font-size:14px; }
+  @media (prefers-color-scheme: dark) { .ampel { background:var(--bg2); color:var(--ink); } }
+  @media (max-width:760px) { .ampel .wrap { grid-template-columns:1fr; } }
+
+  /* Abschnitte */
+  section.block { padding:88px 0; }
+  section.alt { background:var(--bg2); }
+  .head { max-width:640px; margin-bottom:44px; }
+  .head h2 { font-size:clamp(30px, 4vw, 44px); margin-top:10px; }
+  .head p { color:var(--muted); font-size:17px; margin:14px 0 0; }
+
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .step { background:var(--card); border:1px solid var(--line); border-radius:24px; padding:28px; }
+  .num { font-family:var(--serif); font-size:15px; font-weight:700; color:var(--coral); }
+  .step h3 { font-size:24px; margin:10px 0 10px; }
+  .step ul { margin:0; padding-left:18px; color:var(--muted); }
+  .step li { margin:4px 0; }
+  @media (max-width:860px) { .steps { grid-template-columns:1fr; } }
+
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .feat { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:24px; }
+  .ico { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:14px; }
+  .feat h3 { font-size:20px; margin-bottom:6px; }
+  .feat p { margin:0; color:var(--muted); font-size:15px; }
+  @media (max-width:860px) { .grid { grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px) { .grid { grid-template-columns:1fr; } }
+
+  .split { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+  @media (max-width:860px) { .split { grid-template-columns:1fr; } }
+  .roles { background:var(--card); border:1px solid var(--line); border-radius:24px; padding:18px; }
+  .role { display:flex; gap:14px; align-items:center; padding:12px; border-radius:14px; }
+  .role + .role { border-top:1px solid var(--line); }
+  .av { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex:none; }
+  .role b { display:block; } .role small { color:var(--muted); }
+  .checks { list-style:none; padding:0; margin:22px 0 0; }
+  .checks li { padding-left:30px; position:relative; margin:10px 0; }
+  .checks li::before { content:"✓"; position:absolute; left:0; top:0; width:20px; height:20px; border-radius:50%;
+                       background:var(--mint-soft); color:var(--mint); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+  .about { background:var(--card); border:1px solid var(--line); border-radius:28px; padding:40px; display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center; }
+  .about h2 { font-size:30px; margin-bottom:10px; }
+  .about p { margin:0; color:var(--muted); }
+  @media (max-width:640px) { .about { grid-template-columns:1fr; padding:28px; } }
+
+  .faq { max-width:760px; }
+  details { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 22px; margin-bottom:10px; }
+  summary { cursor:pointer; font-weight:600; list-style:none; display:flex; justify-content:space-between; gap:16px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; color:var(--coral); font-size:22px; line-height:1; }
+  details[open] summary::after { content:"–"; }
+  details p { color:var(--muted); margin:12px 0 0; }
+
+  .final { text-align:center; padding:96px 0; }
+  .final h2 { font-size:clamp(34px, 5vw, 56px); margin-bottom:16px; }
+  .final .ctas { justify-content:center; margin-top:28px; }
+
+  footer { border-top:1px solid var(--line); padding:32px 0 44px; font-size:14px; color:var(--muted); }
+  footer .wrap { display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; }
+  footer .flinks { display:flex; flex-wrap:wrap; gap:18px; margin-left:auto; }
+  footer a { text-decoration:none; } footer a:hover { color:var(--ink); }
 </style>
 </head>
 <body>
-<main class="card" id="box">
-  <div class="logo">K</div>
-  <div class="icon" id="icon">⏳</div>
-  <h1 id="title">Einen Moment …</h1>
-  <p id="text"></p>
-  <small>KPF – Keep it fresh · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="nutzungsbedingungen.html" style="color:inherit">Nutzungsbedingungen</a></small>
-</main>
-<script>
-  // Supabase hat den Link schon geprüft und leitet hierher weiter.
-  // Erfolg: ?code=… oder #access_token=… · Fehler: #error=…&error_code=…
-  var q = new URLSearchParams(location.search);
-  var h = new URLSearchParams(location.hash.replace(/^#/, ''));
-  var err = q.get('error') || h.get('error');
-  var errCode = q.get('error_code') || h.get('error_code') || '';
-  var success = !err && (q.get('code') || h.get('access_token') || h.get('type'));
-  // Codes und Schlüssel nicht in der Adresszeile stehen lassen.
-  if (location.search || location.hash) history.replaceState(null, '', location.pathname);
-  function show(cls, icon, title, text) {
-    document.getElementById('box').className = 'card ' + cls;
-    document.getElementById('icon').textContent = icon;
-    document.getElementById('title').textContent = title;
-    document.getElementById('text').textContent = text;
-  }
-  if (err) {
-    var expired = /expired|otp/i.test(errCode + ' ' + (q.get('error_description') || h.get('error_description') || ''));
-    show('err', '⚠️',
-      expired ? 'Link abgelaufen oder schon benutzt' : 'Das hat nicht geklappt',
-      'Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der KPF-App einloggen. ' +
-      'Sonst in der App mit E-Mail und Passwort einloggen und auf „Code senden“ tippen.');
-  } else if (success) {
-    show('ok', '✅', 'E-Mail-Adresse bestätigt',
-      'Super! Du kannst diese Seite schließen und zurück in die KPF-App wechseln – dort wirst du automatisch angemeldet. Falls nicht: mit E-Mail-Adresse und Passwort einloggen.');
-  } else {
-    show('', '🥬', 'KPF – Keep it fresh',
-      'Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die KPF-App.');
-  }
-</script>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Bevora Startseite">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="12" fill="#F2613F"/>
+        <circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4"/>
+        <path d="M20 9 A11 11 0 1 1 9 20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="3" fill="#fff"/>
+      </svg>
+      Bevora
+    </a>
+    <div class="links">
+      <a href="#so-gehts">So geht's</a>
+      <a href="#funktionen">Funktionen</a>
+      <a href="#haushalt">Haushalt</a>
+      <a href="#faq">Fragen</a>
+    </div>
+    <a class="btn btn-primary" href="mailto:hallo@bevora.app?subject=Bevora%20testen">Testen</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Der Vorrat für deinen Haushalt</div>
+      <h1>Iss es, <em>bevor's</em> abläuft.</h1>
+      <p class="lead">Bevora weiß, was in Kühlschrank und Vorratsschrank liegt, und erinnert euch rechtzeitig, bevor das Mindesthaltbarkeitsdatum erreicht ist. Weniger wegwerfen, entspannter einkaufen.</p>
+      <div class="ctas">
+        <span class="btn btn-soon" title="Bald verfügbar">App Store · bald</span>
+        <span class="btn btn-soon" title="Bald verfügbar">▶ Google Play · bald</span>
+        <a class="btn btn-ghost" href="#so-gehts">So funktioniert's ↓</a>
+      </div>
+      <p class="note">Gerade im Test mit ersten Familien. Du willst dabei sein? <a href="mailto:hallo@bevora.app?subject=Bevora%20testen">Schreib uns</a>.</p>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="phone">
+        <div class="bar"></div>
+        <h4>Vorrat</h4>
+        <p class="sub">Zuerst dran · sortiert nach MHD</p>
+        <div class="item"><span class="emo">🥛</span><div><b>Milch</b><small>Kühlschrank · 1 l</small></div><span class="chip c-red">heute</span></div>
+        <div class="item"><span class="emo">🥬</span><div><b>Spinat</b><small>Kühlschrank · 1 Pck.</small></div><span class="chip c-sun">morgen</span></div>
+        <div class="item"><span class="emo">🍌</span><div><b>Bananen</b><small>Obstschale · 4 Stk.</small></div><span class="chip c-sun">2 Tage</span></div>
+        <div class="item"><span class="emo">🧀</span><div><b>Gouda</b><small>Kühlschrank · 400 g</small></div><span class="chip c-mint">6 Tage</span></div>
+        <div class="item"><span class="emo">🍝</span><div><b>Spaghetti</b><small>Vorratsschrank · 500 g</small></div><span class="chip c-mint">8 Mon.</span></div>
+      </div>
+      <div class="push">
+        <div class="t">
+          <svg width="18" height="18" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#F2613F"/><path d="M20 9 A11 11 0 1 1 9 20" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+          Bevora · jetzt
+        </div>
+        Milch läuft heute ab, Spinat morgen. Wie wär's mit Pfannkuchen mit Spinat? 🥞
+      </div>
+      <div class="badge">✓ Diese Woche nichts weggeworfen</div>
+    </div>
+  </div>
+</header>
+
+<div class="ampel">
+  <div class="wrap">
+    <div class="a"><span class="dot" style="background:var(--mint)"></span><div><b>Frisch</b><span>Alles gut, noch genug Zeit.</span></div></div>
+    <div class="a"><span class="dot" style="background:var(--sun)"></span><div><b>Bald dran</b><span>In den nächsten Tagen einplanen.</span></div></div>
+    <div class="a"><span class="dot" style="background:var(--coral)"></span><div><b>Heute verbrauchen</b><span>Bevora erinnert dich rechtzeitig.</span></div></div>
+  </div>
+</div>
+
+<section class="block" id="so-gehts">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">So geht's</div>
+      <h2>Drei Schritte, und nichts gerät in Vergessenheit.</h2>
+      <p>Kein mühsames Abtippen. Bevora nimmt dir die Arbeit ab und meldet sich, wenn es wichtig wird.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Erfassen</h3>
+        <ul>
+          <li>Kassenbon fotografieren, die KI erkennt die Artikel</li>
+          <li>Oder Barcode scannen</li>
+          <li>MHD und Lagerort ergänzen</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Erinnern</h3>
+        <ul>
+          <li>Ampel zeigt, was zuerst dran ist</li>
+          <li>Push-Nachricht, bevor das MHD erreicht ist</li>
+          <li>Für alle im Haushalt</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Verbrauchen</h3>
+        <ul>
+          <li>Rezeptideen aus dem, was bald dran ist</li>
+          <li>Verbrauchtes mit einem Tipp austragen</li>
+          <li>Leeres landet auf der Einkaufsliste</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="funktionen">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Funktionen</div>
+      <h2>Eine App für Vorrat, Einkauf und Budget.</h2>
+    </div>
+    <div class="grid">
+      <div class="feat"><div class="ico" style="background:var(--coral-soft)">🧾</div><h3>Kassenbon-Scan</h3><p>Foto machen, fertig. Artikel, Mengen und Preise werden automatisch übernommen.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--sun-soft)">⏰</div><h3>MHD-Erinnerung</h3><p>Rechtzeitig Bescheid wissen, nicht erst, wenn es zu spät ist.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🍳</div><h3>Rezeptideen</h3><p>Vorschläge passend zu dem, was zuerst verbraucht werden sollte.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🛒</div><h3>Gemeinsame Einkaufsliste</h3><p>Alle sehen sofort, was fehlt, mit Push, wenn etwas dazukommt.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--coral-soft)">📦</div><h3>Vorrat nach Lagerort</h3><p>Kühlschrank, Tiefkühler, Vorratsschrank: alles an seinem Platz.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--sun-soft)">💶</div><h3>Ausgaben im Blick</h3><p>Budget pro Monat, auf Wunsch aufgeteilt nach Personen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="haushalt">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">Für den ganzen Haushalt</div>
+      <h2 style="font-size:clamp(30px,4vw,44px);margin-top:10px">Familie, Paar oder WG: alle auf dem gleichen Stand.</h2>
+      <p class="muted" style="font-size:17px;margin-top:14px">Ladet euch gegenseitig ein und legt fest, wer was darf. Kinder steigen per QR-Code ein, ganz ohne eigene E-Mail-Adresse.</p>
+      <ul class="checks">
+        <li>Mehrere Eigentümer mit gleichen Rechten</li>
+        <li>Mitglieder pflegen Vorrat und Einkäufe</li>
+        <li>Kinderhandy: ansehen, verbrauchen, Einkaufsliste</li>
+        <li>Mitglieder entfernen, wenn jemand auszieht</li>
+      </ul>
+    </div>
+    <div class="roles" aria-hidden="true">
+      <div class="role"><span class="av" style="background:var(--coral)">A</span><div><b>Anna</b><small>Eigentümerin · alles</small></div></div>
+      <div class="role"><span class="av" style="background:#8A5CB8">B</span><div><b>Ben</b><small>Eigentümer · alles</small></div></div>
+      <div class="role"><span class="av" style="background:var(--mint)">M</span><div><b>Mitbewohner</b><small>Mitglied · Vorrat & Einkäufe</small></div></div>
+      <div class="role"><span class="av" style="background:var(--sun)">K</span><div><b>Kinderhandy</b><small>Kind · per QR-Code</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="about">
+      <svg width="88" height="88" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="12" fill="#F2613F"/>
+        <circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4"/>
+        <path d="M20 9 A11 11 0 1 1 9 20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="3" fill="#fff"/>
+      </svg>
+      <div>
+        <h2>Aus dem eigenen Familienalltag entstanden.</h2>
+        <p>Bevora wird unabhängig in Deutschland entwickelt und jeden Tag im eigenen Haushalt benutzt. Kein Konzern, keine Werbung in der App. Ideen und Kritik sind herzlich willkommen: <a href="mailto:hallo@bevora.app">hallo@bevora.app</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="faq">
+  <div class="wrap faq">
+    <div class="head">
+      <div class="eyebrow">Gut zu wissen</div>
+      <h2>Häufige Fragen</h2>
+    </div>
+    <details><summary>Was kostet Bevora?</summary><p>Während der Testphase ist Bevora kostenlos.</p></details>
+    <details><summary>Auf welchen Geräten läuft Bevora?</summary><p>Auf iPhone und Android. Alle Geräte eines Haushalts sehen denselben Vorrat, egal welches Handy jemand hat.</p></details>
+    <details><summary>Muss ich jeden Artikel abtippen?</summary><p>Nein. Fotografiere einfach den Kassenbon oder scanne den Barcode. Das MHD kannst du mit wenigen Tipps ergänzen.</p></details>
+    <details><summary>Geht es darum, Abgelaufenes noch zu essen?</summary><p>Nein, im Gegenteil: Bevora hilft dir, Lebensmittel zu verbrauchen, <strong>bevor</strong> das Mindesthaltbarkeitsdatum erreicht ist. So muss gar nicht erst etwas weg.</p></details>
+    <details><summary>Brauchen Kinder eine E-Mail-Adresse?</summary><p>Nein. Ein Eigentümer zeigt einen QR-Code, das Kinderhandy scannt ihn und ist dabei, mit eingeschränkten Rechten.</p></details>
+    <details><summary>Wie kann ich mitmachen?</summary><p>Schreib uns an <a href="mailto:hallo@bevora.app?subject=Bevora%20testen">hallo@bevora.app</a>, dann bekommst du eine Einladung zum Test.</p></details>
+  </div>
+</section>
+
+<section class="final alt">
+  <div class="wrap">
+    <h2>Iss es, <em>bevor's</em> abläuft.</h2>
+    <p class="muted" style="font-size:18px">Bald im App Store und bei Google Play.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="mailto:hallo@bevora.app?subject=Bevora%20testen">Beim Test mitmachen</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--ink)">Bevora</b> · Iss es, bevor's abläuft.</span>
+    <div class="flinks">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      <a href="mailto:hallo@bevora.app">Kontakt</a>
+    </div>
+    <span style="width:100%">© 2026 Bevora</span>
+  </div>
+</footer>
+
 </body>
 </html>
