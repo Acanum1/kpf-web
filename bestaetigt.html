@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>KPF – Keep it fresh</title>
+<title>Bevora</title>
 <style>
-  :root { --bg:#f3f7f1; --card:#ffffff; --text:#1c2a1e; --muted:#5b6b5d; --green:#2e7d32; --red:#c62828; }
+  :root { --bg:#FFF8F0; --card:#ffffff; --text:#2A1E2F; --muted:#6E6272; --green:#23885F; --red:#C62828; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#121813; --card:#1d261f; --text:#e8efe8; --muted:#a3b2a5; --green:#81c784; --red:#ef9a9a; }
+    :root { --bg:#1B1420; --card:#2C2233; --text:#F7EEE6; --muted:#BFB2C2; --green:#5FD3A2; --red:#ef9a9a; }
   }
   * { box-sizing: border-box; }
   body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
@@ -16,8 +16,7 @@
          font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
   .card { background:var(--card); border-radius:20px; padding:32px 24px; max-width:420px; width:100%;
           text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.08); }
-  .logo { width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:30px;
-          font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+  .logo { display:block; margin:0 auto 16px; }
   .icon { font-size:48px; margin:8px 0; }
   h1 { font-size:22px; margin:8px 0 12px; }
   p { color:var(--muted); line-height:1.5; margin:8px 0; }
@@ -27,11 +26,11 @@
 </head>
 <body>
 <main class="card" id="box">
-  <div class="logo">K</div>
+  <svg class="logo" width="64" height="64" viewBox="0 0 40 40" aria-hidden="true" style="display:block;margin:0 auto 16px"><rect width="40" height="40" rx="12" fill="#F2613F"/><circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4"/><path d="M20 9 A11 11 0 1 1 9 20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="20" cy="20" r="3" fill="#fff"/></svg>
   <div class="icon" id="icon">⏳</div>
   <h1 id="title">Einen Moment …</h1>
   <p id="text"></p>
-  <small>KPF – Keep it fresh · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="nutzungsbedingungen.html" style="color:inherit">Nutzungsbedingungen</a></small>
+  <small>Bevora · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="nutzungsbedingungen.html" style="color:inherit">Nutzungsbedingungen</a></small>
 </main>
 <script>
   // Supabase hat den Link schon geprüft und leitet hierher weiter.
@@ -53,14 +52,14 @@
     var expired = /expired|otp/i.test(errCode + ' ' + (q.get('error_description') || h.get('error_description') || ''));
     show('err', '⚠️',
       expired ? 'Link abgelaufen oder schon benutzt' : 'Das hat nicht geklappt',
-      'Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der KPF-App einloggen. ' +
+      'Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der Bevora-App einloggen. ' +
       'Sonst in der App mit E-Mail und Passwort einloggen und auf „Code senden“ tippen.');
   } else if (success) {
     show('ok', '✅', 'E-Mail-Adresse bestätigt',
-      'Super! Du kannst diese Seite schließen und zurück in die KPF-App wechseln – dort wirst du automatisch angemeldet. Falls nicht: mit E-Mail-Adresse und Passwort einloggen.');
+      'Super! Du kannst diese Seite schließen und zurück in die Bevora-App wechseln – dort wirst du automatisch angemeldet. Falls nicht: mit E-Mail-Adresse und Passwort einloggen.');
   } else {
-    show('', '🥬', 'KPF – Keep it fresh',
-      'Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die KPF-App.');
+    show('', '⏳', 'Bevora',
+      'Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die Bevora-App.');
   }
 </script>
 </body>
