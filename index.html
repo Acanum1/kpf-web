@@ -114,6 +114,14 @@
   @media (max-width:860px) { .grid { grid-template-columns:1fr 1fr; } }
   @media (max-width:560px) { .grid { grid-template-columns:1fr; } }
 
+  .plans { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .plan { background:var(--card); border:1px solid var(--line); border-radius:24px; padding:28px; }
+  .plan.plus { border:2px solid var(--coral); }
+  .plan h3 { font-size:24px; margin-bottom:4px; }
+  .plan .price { color:var(--muted); margin:0 0 6px; }
+  .tag { display:inline-block; background:var(--coral-soft); color:var(--coral); border-radius:999px; padding:3px 10px; font-size:12px; font-weight:700; margin-left:6px; vertical-align:middle; }
+  @media (max-width:760px) { .plans { grid-template-columns:1fr; } }
+
   .split { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
   @media (max-width:860px) { .split { grid-template-columns:1fr; } }
   .roles { background:var(--card); border:1px solid var(--line); border-radius:24px; padding:18px; }
@@ -166,6 +174,7 @@
       <a href="#so-gehts">So geht's</a>
       <a href="#funktionen">Funktionen</a>
       <a href="#haushalt">Haushalt</a>
+      <a href="#plus">Plus</a>
       <a href="#faq">Fragen</a>
     </div>
     <a class="btn btn-primary" href="mailto:hallo@bevora.app?subject=Bevora%20testen">Testen</a>
@@ -183,7 +192,7 @@
         <span class="btn btn-soon" title="Bald verfügbar">▶ Google Play · bald</span>
         <a class="btn btn-ghost" href="#so-gehts">So funktioniert's ↓</a>
       </div>
-      <p class="note">Gerade im Test mit ersten Familien. Du willst dabei sein? <a href="mailto:hallo@bevora.app?subject=Bevora%20testen">Schreib uns</a>.</p>
+      <p class="note">Gerade im Test mit ersten Familien, auf iPhone und Android. Du willst dabei sein? <a href="mailto:hallo@bevora.app?subject=Bevora%20testen">Schreib uns</a>.</p>
     </div>
 
     <div class="stage" aria-hidden="true">
@@ -263,12 +272,15 @@
       <h2>Eine App für Vorrat, Einkauf und Budget.</h2>
     </div>
     <div class="grid">
-      <div class="feat"><div class="ico" style="background:var(--coral-soft)">🧾</div><h3>Kassenbon-Scan</h3><p>Foto machen, fertig. Artikel, Mengen und Preise werden automatisch übernommen.</p></div>
-      <div class="feat"><div class="ico" style="background:var(--sun-soft)">⏰</div><h3>MHD-Erinnerung</h3><p>Rechtzeitig Bescheid wissen, nicht erst, wenn es zu spät ist.</p></div>
-      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🍳</div><h3>Rezeptideen</h3><p>Vorschläge passend zu dem, was zuerst verbraucht werden sollte.</p></div>
-      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🛒</div><h3>Gemeinsame Einkaufsliste</h3><p>Alle sehen sofort, was fehlt, mit Push, wenn etwas dazukommt.</p></div>
-      <div class="feat"><div class="ico" style="background:var(--coral-soft)">📦</div><h3>Vorrat nach Lagerort</h3><p>Kühlschrank, Tiefkühler, Vorratsschrank: alles an seinem Platz.</p></div>
-      <div class="feat"><div class="ico" style="background:var(--sun-soft)">💶</div><h3>Ausgaben im Blick</h3><p>Budget pro Monat, auf Wunsch aufgeteilt nach Personen.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--coral-soft)">🧾</div><h3>Kassenbon &amp; eBon</h3><p>Foto oder PDF, fertig. Artikel, Mengen und Preise landen im Vorrat. Bevora lernt dabei mit, auch kryptische Abkürzungen wie „MAOAM MIX“.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--sun-soft)">⏰</div><h3>MHD-Erinnerung</h3><p>Rechtzeitig Bescheid wissen, nicht erst, wenn es zu spät ist. Für Obst und Gemüse ohne Datum schätzt Bevora die Frische nach Sorte.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🛒</div><h3>Gemeinsame Einkaufsliste</h3><p>Alle sehen sofort, was fehlt, mit Push, wenn etwas dazukommt. Diktieren geht auch, und „Appfel“ wird trotzdem zu Äpfeln.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--coral-soft)">📦</div><h3>Vorrat nach Lagerort</h3><p>Kühlschrank, Gefrierfach, Vorratsschrank: alles an seinem Platz. Tiefkühlware und Eis erkennt Bevora von selbst.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🥑</div><h3>Symbole, die passen</h3><p>Jedes Produkt mit eigenem Bild, auf iPhone und Android gleich. Passt eins nicht, wählst du ein anderes für den ganzen Haushalt.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--sun-soft)">💶</div><h3>Ausgaben im Blick</h3><p>Budget pro Monat, frühere Monate und wer im Haushalt was bezahlt hat.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--mint-soft)">🍳</div><h3>Rezeptideen <span class="tag">Plus</span></h3><p>Vorschläge passend zu dem, was zuerst verbraucht werden sollte.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--coral-soft)">🔔</div><h3>Push für den Haushalt</h3><p>Gebündelte Nachrichten, wenn jemand einkauft oder etwas bald abläuft. Ohne Nachrichtenflut.</p></div>
+      <div class="feat"><div class="ico" style="background:var(--sun-soft)">🔒</div><h3>Daten in der EU</h3><p>Gespeichert in Irland, ohne Werbung und ohne Datenverkauf. Jeder Haushalt sieht nur seine eigenen Daten.</p></div>
     </div>
   </div>
 </section>
@@ -295,7 +307,38 @@
   </div>
 </section>
 
-<section class="block alt">
+<section class="block alt" id="plus">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Kostenlos und Plus</div>
+      <h2>Das Wichtigste bleibt kostenlos.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Bevora</h3>
+        <p class="price">kostenlos</p>
+        <ul class="checks">
+          <li>Vorrat, Einkaufsliste und Haushalt teilen</li>
+          <li>Erinnerungen vor Ablauf, Push für den Haushalt</li>
+          <li>Barcode, Bon-Erkennung auf dem Handy, Bevora-Wörterbuch</li>
+          <li>Eigene Produktsymbole, Kinderhandy per QR-Code</li>
+        </ul>
+      </div>
+      <div class="plan plus">
+        <h3>Bevora Plus <span class="tag">in der Testphase gratis</span></h3>
+        <p class="price">ein Abo für den ganzen Haushalt · Preise folgen zum Start</p>
+        <ul class="checks">
+          <li>KI-Bonscan: auch lange und zerknitterte Bons und eBons</li>
+          <li>KI-Rezepte aus dem, was bald abläuft</li>
+          <li>Budget-Verlauf und wer was bezahlt hat</li>
+          <li>Einer zahlt, alle im Haushalt haben Plus, egal ob iPhone oder Android</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
   <div class="wrap">
     <div class="about">
       <svg width="88" height="88" viewBox="0 0 40 40" aria-hidden="true">
@@ -312,23 +355,24 @@
   </div>
 </section>
 
-<section class="block" id="faq">
+<section class="block alt" id="faq">
   <div class="wrap faq">
     <div class="head">
       <div class="eyebrow">Gut zu wissen</div>
       <h2>Häufige Fragen</h2>
     </div>
-    <details><summary>Was kostet Bevora?</summary><p>Während der Testphase ist Bevora kostenlos.</p></details>
+    <details><summary>Was kostet Bevora?</summary><p>Während der Testphase ist alles kostenlos. Danach bleiben Vorrat, Einkaufsliste, Haushalt und Erinnerungen kostenlos. <a href="#plus">Bevora Plus</a> mit KI-Bonscan, KI-Rezepten und Budget-Verlauf wird ein Abo für den ganzen Haushalt. Die Preise nennen wir zum Start.</p></details>
     <details><summary>Auf welchen Geräten läuft Bevora?</summary><p>Auf iPhone und Android. Alle Geräte eines Haushalts sehen denselben Vorrat, egal welches Handy jemand hat.</p></details>
     <details><summary>Muss ich jeden Artikel abtippen?</summary><p>Nein. Fotografiere einfach den Kassenbon oder scanne den Barcode. Das MHD kannst du mit wenigen Tipps ergänzen.</p></details>
     <details><summary>Schützt Bevora davor, dass etwas abläuft?</summary><p>Bevora ist eine <strong>Erinnerungshilfe</strong>, keine Garantie. Daten und Erinnerungen können falsch sein oder ausbleiben. Prüfe Haltbarkeit und Zustand deiner Lebensmittel vor dem Verzehr bitte immer selbst. Details stehen in den <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>.</p></details>
     <details><summary>Geht es darum, Abgelaufenes noch zu essen?</summary><p>Nein, im Gegenteil: Bevora hilft dir, Lebensmittel zu verbrauchen, <strong>bevor</strong> das Mindesthaltbarkeitsdatum erreicht ist. So muss gar nicht erst etwas weg.</p></details>
+    <details><summary>Wo liegen meine Daten?</summary><p>In einem Rechenzentrum in Irland (EU). Jeder Haushalt sieht nur seine eigenen Daten, Bevora zeigt keine Werbung und verkauft keine Daten. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p></details>
     <details><summary>Brauchen Kinder eine E-Mail-Adresse?</summary><p>Nein. Ein Eigentümer zeigt einen QR-Code, das Kinderhandy scannt ihn und ist dabei, mit eingeschränkten Rechten.</p></details>
     <details><summary>Wie kann ich mitmachen?</summary><p>Schreib uns an <a href="mailto:hallo@bevora.app?subject=Bevora%20testen">hallo@bevora.app</a>, dann bekommst du eine Einladung zum Test.</p></details>
   </div>
 </section>
 
-<section class="final alt">
+<section class="final">
   <div class="wrap">
     <h2>Iss es, <em>bevor's</em> abläuft.</h2>
     <p class="muted" style="font-size:18px">Bald im App Store und bei Google Play.</p>
@@ -348,6 +392,7 @@
       <a href="mailto:hallo@bevora.app">Kontakt</a>
     </div>
     <span style="width:100%">Bevora ist eine Erinnerungshilfe und ersetzt nicht die eigene Prüfung von Haltbarkeit und Zustand deiner Lebensmittel.</span>
+    <span style="width:100%">Symbole in der App: Fluent Emoji von Microsoft (MIT-Lizenz).</span>
     <span style="width:100%">© 2026 Bevora</span>
   </div>
 </footer>
