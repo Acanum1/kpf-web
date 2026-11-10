@@ -6,6 +6,9 @@
 <title>Bevora – Iss es, bevor's abläuft.</title>
 <meta name="description" content="Bevora ist der gemeinsame Vorrat für deinen Haushalt: Kassenbon fotografieren, rechtzeitig erinnert werden, alles vor dem MHD verbrauchen.">
 <meta name="theme-color" content="#2A1E2F">
+<link rel="alternate" hreflang="de" href="https://bevora.app/">
+<link rel="alternate" hreflang="en" href="https://bevora.app/en/">
+<link rel="alternate" hreflang="x-default" href="https://bevora.app/">
 <script>
   // Bestätigungslinks von Supabase landen auf der Startseite → weiter zur Bestätigungsseite.
   (function () {
@@ -158,6 +161,16 @@
   footer .wrap { display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; }
   footer .flinks { display:flex; flex-wrap:wrap; gap:18px; margin-left:auto; }
   footer a { text-decoration:none; } footer a:hover { color:var(--ink); }
+
+  /* Sprache */
+  .lang { font-size:14px; font-weight:700; text-decoration:none; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:6px 12px; }
+  .lang:hover { color:var(--ink); }
+  @media (max-width:760px) { .lang { margin-left:auto; } nav .btn { margin-left:0; } }
+  .langbar { display:none; background:var(--ink); color:var(--bg); font-size:14px; }
+  .langbar .wrap { display:flex; gap:14px; align-items:center; min-height:44px; flex-wrap:wrap; }
+  .langbar a { color:var(--bg); font-weight:700; }
+  .langbar button { margin-left:auto; background:none; border:0; color:var(--bg); font-size:20px; cursor:pointer; }
+  @media (prefers-color-scheme: dark) { .langbar { background:var(--bg2); color:var(--ink); } .langbar a, .langbar button { color:var(--ink); } }
 </style>
 </head>
 <body>
@@ -180,9 +193,27 @@
       <a href="#plus">Plus</a>
       <a href="#faq">Fragen</a>
     </div>
+    <a class="lang" href="en/" hreflang="en" lang="en" title="English" onclick="setLang('en')">EN</a>
     <a class="btn btn-primary" href="mailto:hallo@bevora.app?subject=Bevora%20testen">Testen</a>
   </div>
 </nav>
+<div class="langbar" id="langbar" lang="en">
+  <div class="wrap">
+    <span>This page is also available in English.</span>
+    <a href="en/" hreflang="en" onclick="setLang('en')">Switch to English →</a>
+    <button type="button" aria-label="Close" onclick="setLang('de');document.getElementById('langbar').style.display='none'">×</button>
+  </div>
+</div>
+<script>
+  // Sprache merken; Hinweis nur für Browser ohne Deutsch und ohne eigene Wahl.
+  function setLang(l) { try { localStorage.setItem('bevora_lang', l); } catch (e) {} }
+  (function () {
+    var saved = null; try { saved = localStorage.getItem('bevora_lang'); } catch (e) {}
+    var langs = navigator.languages || [navigator.language || ''];
+    var german = langs.some(function (l) { return /^de/i.test(l); });
+    if (!saved && !german) document.getElementById('langbar').style.display = 'block';
+  })();
+</script>
 
 <header class="hero" id="top">
   <div class="wrap">
@@ -337,7 +368,7 @@
           <li>Budget-Verlauf und wer was bezahlt hat</li>
           <li>Einer zahlt: bis zu 6 Erwachsene und alle Kinder haben Plus, egal ob iPhone oder Android</li>
         </ul>
-        <p class="note">Bis zum offiziellen Start ist Plus für alle gratis. Danach mit kostenloser Probezeit, gebucht und jederzeit kündbar über App Store oder Google Play. Mehr als 6 Erwachsene im Haushalt, etwa in einer großen WG? Dann schließt ein weiteres Mitglied ein eigenes Plus ab.</p>
+        <p class="note">Bis zum offiziellen Start ist Plus für alle gratis. Danach direkt in der App abschließen, mit kostenloser Probezeit für neue Abonnenten, bezahlt und jederzeit kündbar über App Store oder Google Play. Mehr als 6 Erwachsene im Haushalt, etwa in einer großen WG? Dann schließt ein weiteres Mitglied ein eigenes Plus ab.</p>
       </div>
     </div>
   </div>
@@ -395,6 +426,7 @@
       <a href="datenschutz.html">Datenschutz</a>
       <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
       <a href="mailto:hallo@bevora.app">Kontakt</a>
+      <a href="en/" hreflang="en" lang="en" onclick="setLang('en')">English</a>
     </div>
     <span style="width:100%">Bevora ist eine Erinnerungshilfe und ersetzt nicht die eigene Prüfung von Haltbarkeit und Zustand deiner Lebensmittel.</span>
     <span style="width:100%">Symbole in der App: Fluent Emoji von Microsoft (MIT-Lizenz).</span>

@@ -30,7 +30,7 @@
   <div class="icon" id="icon">⏳</div>
   <h1 id="title">Einen Moment …</h1>
   <p id="text"></p>
-  <small>Bevora · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="nutzungsbedingungen.html" style="color:inherit">Nutzungsbedingungen</a></small>
+  <small>Bevora · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="nutzungsbedingungen.html" style="color:inherit">Nutzungsbedingungen</a> · <a href="en/privacy.html" style="color:inherit" lang="en">Privacy</a></small>
 </main>
 <script>
   // Supabase hat den Link schon geprüft und leitet hierher weiter.
@@ -48,18 +48,25 @@
     document.getElementById('title').textContent = title;
     document.getElementById('text').textContent = text;
   }
+  var en = !(navigator.languages || [navigator.language || '']).some(function (l) { return /^de/i.test(l); });
+  function t(de, eng) { return en ? eng : de; }
+  if (en) document.documentElement.lang = 'en';
   if (err) {
     var expired = /expired|otp/i.test(errCode + ' ' + (q.get('error_description') || h.get('error_description') || ''));
     show('err', '⚠️',
-      expired ? 'Link abgelaufen oder schon benutzt' : 'Das hat nicht geklappt',
-      'Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der Bevora-App einloggen. ' +
-      'Sonst in der App mit E-Mail und Passwort einloggen und auf „Code senden“ tippen.');
+      expired ? t('Link abgelaufen oder schon benutzt', 'Link expired or already used') : t('Das hat nicht geklappt', 'That didn’t work'),
+      t('Hast du schon einmal auf den Link getippt, ist deine Adresse bereits bestätigt – dann einfach in der Bevora-App einloggen. ' +
+        'Sonst in der App mit E-Mail und Passwort einloggen und auf „Code senden“ tippen.',
+        'If you already tapped the link once, your address is confirmed – just log in to the Bevora app. ' +
+        'Otherwise log in to the app with your email and password and tap “Send code”.'));
   } else if (success) {
-    show('ok', '✅', 'E-Mail-Adresse bestätigt',
-      'Super! Du kannst diese Seite schließen und zurück in die Bevora-App wechseln – dort wirst du automatisch angemeldet. Falls nicht: mit E-Mail-Adresse und Passwort einloggen.');
+    show('ok', '✅', t('E-Mail-Adresse bestätigt', 'Email address confirmed'),
+      t('Super! Du kannst diese Seite schließen und zurück in die Bevora-App wechseln – dort wirst du automatisch angemeldet. Falls nicht: mit E-Mail-Adresse und Passwort einloggen.',
+        'Great! You can close this page and switch back to the Bevora app – you’ll be signed in automatically. If not, log in with your email address and password.'));
   } else {
     show('', '⏳', 'Bevora',
-      'Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die Bevora-App.');
+      t('Der gemeinsame Vorrat für deinen Haushalt. Diese Seite bestätigt E-Mail-Adressen für die Bevora-App.',
+        'The shared pantry for your household. This page confirms email addresses for the Bevora app.'));
   }
 </script>
 </body>
