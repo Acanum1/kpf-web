@@ -23,4 +23,8 @@
   <url><loc>https://bevora.app/en/terms.html</loc><priority>0.3</priority></url>
   <url><loc>https://bevora.app/en/imprint.html</loc><priority>0.2</priority></url>
   <url><loc>https://bevora.app/en/delete-account.html</loc><priority>0.2</priority></url>
+  <url><loc>https://bevora.app/ratgeber/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bevora.app/ratgeber/vorratsliste.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bevora.app/ratgeber/mhd-abgelaufen.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bevora.app/ratgeber/weniger-wegwerfen.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
