@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /bestaetigt.html
+
+Sitemap: https://bevora.app/sitemap.xml
